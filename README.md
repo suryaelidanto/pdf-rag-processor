@@ -1,24 +1,24 @@
-# PDF Cleaner Agent 📄
+# PDF RAG Processor
 
-Extracts clean text from PDF documents and prepares it for AI/LLM processing by chunking based on token limits. No AI required for extraction—just pure Python efficiency.
+Optimized PDF extraction and token-aware chunking pipeline for LLM context windows (Pure Python).
 
-## 🛠️ Setup & Installation
+## Setup & Installation
 
-1.  **Install Dependencies**
-    ```bash
-    uv sync
-    ```
+1. **Install Dependencies**
+   ```bash
+   uv sync
+   ```
 
-2.  **Prepare Your PDF**
-    Place a PDF file named `sample.pdf` in the project directory.
+2. **Prepare Your PDF**
+   Place a PDF file named `sample.pdf` in the project directory.
 
-## 🚀 Running the Script
+## Running the Script
 
 ```bash
 uv run main.py
 ```
 
-## 📊 Example Output
+## Example Output
 
 ```
 --- RAG Readiness Check ---
@@ -31,14 +31,14 @@ Total Chunks Generated: 1
 --------------------------------------------------
 ```
 
-## 🧠 How It Works
+## How It Works
 
-1.  **Extract Text**: Uses `pypdf` to pull clean text from PDF (no AI needed).
-2.  **Count Tokens**: Uses `tiktoken` to calculate how many tokens the text contains.
-3.  **Smart Chunking**: If the document exceeds the token limit (default: 4000), it splits the text into smaller chunks that fit within AI context windows.
-4.  **Output**: Returns an array of text chunks ready to be sent to OpenAI, Gemini, or any LLM.
+1. **Extract Text**: Uses `pypdf` to pull clean text from PDF (no AI needed).
+2. **Count Tokens**: Uses `tiktoken` to calculate how many tokens the text contains.
+3. **Smart Chunking**: If the document exceeds the token limit (default: 4000), it splits the text into smaller chunks that fit within AI context windows.
+4. **Output**: Returns an array of text chunks ready to be sent to OpenAI, Gemini, or any LLM.
 
-## 🎯 Use Cases
+## Use Cases
 
 - Prepare legal documents for AI summarization
 - Extract contract details for automated processing
