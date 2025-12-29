@@ -1,46 +1,80 @@
 # PDF RAG Processor
 
-Optimized PDF extraction and token-aware chunking pipeline for LLM context windows (Pure Python).
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Setup & Installation
+A production-ready microservice designed to handle the heavy lifting of PDF text extraction and token-aware chunking for RAG (Retrieval-Augmented Generation) workflows.
 
-1. **Install Dependencies**
-   ```bash
-   uv sync
-   ```
+## Features
+- **FastAPI Core**: High-performance asynchronous endpoints.
+- **Precision Extraction**: Clean text extraction from PDFs using `pypdf`.
+- **Token-Aware Chunking**: Uses `tiktoken` to ensure chunks fit perfectly within LLM context windows.
+- **Production Infrastructure**: Standardized `Makefile`, `Dockerfile`, and CI/CD.
 
-2. **Prepare Your PDF**
-   Place a PDF file named `sample.pdf` in the project directory.
+---
 
-## Running the Script
+## Prerequisites
+- **Python**: 3.10+
+- **UV**: Fast Python package manager
+- **Make**: Build automation tool
+- **Docker**: For containerized deployment
 
+---
+
+## Usage
+
+### 1. Setup & Installation
 ```bash
-uv run main.py
+make setup
 ```
 
-## Example Output
-
+### 2. Run Development Server
+```bash
+make dev
 ```
---- RAG Readiness Check ---
-Total Tokens: 751
-Status: Document is small enough for a single LLM call.
+The API will be available at `http://localhost:8000`. Access `/docs` for Swagger UI.
 
---- FIRST CHUNK READY FOR LLM CONTEXT (500 chars sample)---
-INDEPENDENT CONTRACTOR AGREEMENT This Agreement is entered into on this 21st Day of December, 2025, between **ExampleCorp.com** (the "Company") and **Surya Elidanto** (the "Contractor"). 1. Scope of Work The Contractor shall provide services as an **AI Software Engineer** focusing on the development and maintenance of custom automation workflows using Python, FastAPI, and N8N. The primary focus shall be the optimization of client data parsing and security protocols. 2. Compensation and Payment T...
-Total Chunks Generated: 1
---------------------------------------------------
+### 3. API Scenarios
+
+#### Scenario: Extract Text from PDF
+**Request:** `POST /extract` (Multipart File)
+**Output:**
+```json
+{
+  "full_text": "Extracted document content...",
+  "total_pages": 5,
+  "filename": "sample.pdf"
+}
 ```
 
-## How It Works
+#### Scenario: Generate LLM-Ready Chunks
+**Request:** `POST /chunk`
+```json
+{
+  "text": "Long document text...",
+  "max_tokens": 1000
+}
+```
+**Output:**
+```json
+{
+  "chunks": ["Part 1...", "Part 2..."],
+  "total_chunks": 2,
+  "total_tokens": 1850
+}
+```
 
-1. **Extract Text**: Uses `pypdf` to pull clean text from PDF (no AI needed).
-2. **Count Tokens**: Uses `tiktoken` to calculate how many tokens the text contains.
-3. **Smart Chunking**: If the document exceeds the token limit (default: 4000), it splits the text into smaller chunks that fit within AI context windows.
-4. **Output**: Returns an array of text chunks ready to be sent to OpenAI, Gemini, or any LLM.
+---
 
-## Use Cases
+## Roadmap
+- [x] Initial FastAPI modularization.
+- [x] Token-aware chunking logic.
+- [ ] Support for OCR (Optical Character Recognition) for scanned PDFs.
+- [ ] Multi-format support (DOCX, HTML).
 
-- Prepare legal documents for AI summarization
-- Extract contract details for automated processing
-- Clean up messy PDFs before sending to RAG systems
-- Batch process invoices or reports for LLM analysis
+---
+
+## Development
+- **Linting**: `make lint`
+- **Testing**: `make test`
+- **Container**: `make up`
