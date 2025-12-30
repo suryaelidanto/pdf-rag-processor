@@ -1,5 +1,6 @@
 # PDF RAG Processor
 
+![CI Status](https://github.com/suryaelidanto/pdf-rag-processor/actions/workflows/ci.yml/badge.svg)
 ![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
